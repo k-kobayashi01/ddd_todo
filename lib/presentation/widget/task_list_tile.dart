@@ -1,3 +1,4 @@
+import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
 import 'package:flutter/material.dart';
 
 class TaskListTile extends StatelessWidget {
@@ -29,7 +30,9 @@ class TaskListTile extends StatelessWidget {
           ),
         ],
       ),
-      onTap: () {},
+      onTap: () {
+        Navigator.pushNamed(context, TaskEditPage.routeName);
+      },
     );
   }
 }
