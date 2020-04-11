@@ -1,3 +1,4 @@
+import 'package:ddd_todo_sample/presentation/page/task_created_page.dart';
 import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
 import 'package:ddd_todo_sample/presentation/page/task_list_page.dart';
 import 'package:flutter/material.dart';
@@ -15,6 +16,7 @@ class MyApp extends StatelessWidget {
       home: TaskListPage(),
       routes: {
         TaskEditPage.routeName: (_) => TaskEditPage(),
+        TaskCreatedPage.routeName: (_) => TaskCreatedPage(),
       },
     );
   }

@@ -1,30 +1,16 @@
 import 'package:ddd_todo_sample/presentation/widget/icon_text_field.dart';
 import 'package:flutter/material.dart';
 
-class TaskEditPage extends StatefulWidget {
-  static const String routeName = 'TaskEditPage';
+class TaskCreatedPage extends StatelessWidget {
+  static const String routeName = 'TaskCreatedPage';
 
-  @override
-  _TaskEditPageState createState() => _TaskEditPageState();
-}
-
-class _TaskEditPageState extends State<TaskEditPage> {
   final TextEditingController titleController = TextEditingController();
   final TextEditingController descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.delete),
-            onPressed: () {
-              _showDialog(context);
-            },
-          ),
-        ],
-      ),
+      appBar: AppBar(),
       body: Column(
         children: <Widget>[
           IconTextField(
@@ -49,7 +35,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
         ],
       ),
       floatingActionButton: FloatingActionButton.extended(
-        label: const Text('Update'),
+        label: const Text('Created'),
         icon: Icon(Icons.check),
         onPressed: () => Navigator.pop(context),
       ),
@@ -62,27 +48,6 @@ class _TaskEditPageState extends State<TaskEditPage> {
       initialDate: DateTime.now(),
       firstDate: DateTime(2020, 1, 1),
       lastDate: DateTime(2020, 12, 31),
-    );
-  }
-
-  Future _showDialog(BuildContext context) {
-    return showDialog(
-      context: context,
-      child: AlertDialog(
-        title: const Text('削除してよろしいですか？'),
-        actions: <Widget>[
-          FlatButton(
-            child: const Text('Cancel'),
-            onPressed: () => Navigator.pop(context),
-          ),
-          FlatButton(
-            child: const Text('OK'),
-            onPressed: () {
-              Navigator.pop(context);
-            },
-          )
-        ],
-      ),
     );
   }
 }
