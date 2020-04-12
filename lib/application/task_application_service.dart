@@ -1,4 +1,5 @@
 import 'package:ddd_todo_sample/application/command/task_create_command.dart';
+import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/common/exception.dart';
 import 'package:ddd_todo_sample/domain/task/task.dart';
 import 'package:ddd_todo_sample/domain/task/task_factory_base.dart';
@@ -29,5 +30,10 @@ class TaskApplicationService {
     }
 
     _taskRepository.save(task);
+  }
+
+  Future<List<TaskDto>> getTasks() async {
+    final List<Task> tasks = await _taskRepository.find();
+    return tasks.map((task) => TaskDto(task)).toList();
   }
 }

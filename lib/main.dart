@@ -1,5 +1,5 @@
 import 'package:ddd_todo_sample/presentation/notifier/task_create_notifier.dart';
-import 'package:ddd_todo_sample/presentation/notifier/task_list_notifier.dart';
+import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
 import 'package:ddd_todo_sample/presentation/page/task_created_page.dart';
 import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
 import 'package:ddd_todo_sample/presentation/page/task_list_page.dart';

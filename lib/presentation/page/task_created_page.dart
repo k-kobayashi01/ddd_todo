@@ -1,5 +1,6 @@
 import 'package:ddd_todo_sample/presentation/notifier/task_create_notifier.dart';
-import 'package:ddd_todo_sample/presentation/notifier/task_list_notifier.dart';
+import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
+import 'package:ddd_todo_sample/presentation/widget/date_text.dart';
 import 'package:ddd_todo_sample/presentation/widget/icon_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -42,7 +43,7 @@ class _TaskCreatedPageState extends State<TaskCreatedPage> {
           const SizedBox(height: 16.0),
           ListTile(
             leading: Icon(Icons.calendar_today),
-            title: Text(notifier.dateString),
+            title: DateText(dateTime: notifier.date),
             onTap: () async {
               final DateTime selectedDate = await _showDatePicker(context);
               notifier.setDate(selectedDate);

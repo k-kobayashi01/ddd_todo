@@ -9,7 +9,7 @@ class TaskService {
   TaskRepositoryBase _repository = TaskRepository(dbHelper: DbHelper());
 
   Future<bool> isExist(TaskTitle title) async {
-    final Task task = await _repository.find(title);
+    final Task task = await _repository.findByTitle(title);
     return task != null;
   }
 }

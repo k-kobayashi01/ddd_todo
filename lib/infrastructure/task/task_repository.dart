@@ -12,24 +12,15 @@ class TaskRepository implements TaskRepositoryBase {
 
   TaskRepository({@required DbHelper dbHelper}) : _dbHelper = dbHelper;
 
-  Task toTask(Map<String, dynamic> data) {
-    final int id = data['id'];
-    final String title = data['title'].toString();
-    final String description = data['description'].toString();
-    final String date = data['date'];
-
-    return Task(
-      id: TaskId(id),
-      title: TaskTitle(title),
-      description: TaskDescription(description),
-      date: TaskDate.fromString(date),
-    );
+  @override
+  Future<List<Task>> find() async {
+    final List<Map<String, dynamic>> list = await _dbHelper.rawQuery('SELECT * FROM tasks');
+    return list.map((data) => toTask(data)).toList();
   }
 
   @override
-  Future<Task> find(TaskTitle title) async {
-    final list = await _dbHelper.rawQuery('SELECT * FROM tasks WHERE title = ?', [title.value]);
-
+  Future<Task> findByTitle(TaskTitle title) async {
+    final List<Map<String, dynamic>> list = await _dbHelper.rawQuery('SELECT * FROM tasks WHERE title = ?', [title.value]);
     return list.isEmpty ? null : toTask(list[0]);
   }
 
@@ -43,6 +34,20 @@ class TaskRepository implements TaskRepositoryBase {
     _dbHelper.rawInsert(
       'INSERT INTO tasks (id, title, description, date) VALUES (?, ?, ?, ?)',
       [task.id.value, task.title.value, task.description.value, task.date.value.toString()],
+    );
+  }
+
+  Task toTask(Map<String, dynamic> data) {
+    final int id = data['id'];
+    final String title = data['title'].toString();
+    final String description = data['description'].toString();
+    final String date = data['date'];
+
+    return Task(
+      id: TaskId(id),
+      title: TaskTitle(title),
+      description: TaskDescription(description),
+      date: TaskDate.fromString(date),
     );
   }
 }

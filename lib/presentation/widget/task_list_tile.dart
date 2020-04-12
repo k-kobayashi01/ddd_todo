@@ -1,12 +1,12 @@
+import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
+import 'package:ddd_todo_sample/presentation/widget/date_text.dart';
 import 'package:flutter/material.dart';
 
 class TaskListTile extends StatelessWidget {
-  final String title;
-  final String description;
-  final String date;
+  final TaskDto task;
 
-  TaskListTile(this.title, this.description, this.date);
+  TaskListTile({@required this.task});
 
   @override
   Widget build(BuildContext context) {
@@ -15,17 +15,17 @@ class TaskListTile extends StatelessWidget {
         icon: Icon(Icons.check_circle_outline),
         onPressed: () {},
       ),
-      title: Text(title),
+      title: Text(task.title),
       subtitle: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
-          Text(description),
+          Text(task.description),
           Row(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Icon(Icons.calendar_today, color: Colors.grey),
               SizedBox(width: 4.0),
-              Text(date),
+              DateText(dateTime: task.date),
             ],
           ),
         ],
