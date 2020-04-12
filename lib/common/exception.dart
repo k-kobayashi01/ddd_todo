@@ -12,3 +12,9 @@ class NullEmptyException implements Exception {
 
   NullEmptyException({@required this.code});
 }
+
+class NotUniqueException implements Exception {
+  final ExceptionCode code;
+
+  NotUniqueException({@required this.code});
+}
