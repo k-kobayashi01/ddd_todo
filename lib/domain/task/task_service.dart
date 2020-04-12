@@ -1,12 +1,15 @@
 import 'package:ddd_todo_sample/domain/task/task.dart';
 import 'package:ddd_todo_sample/domain/task/task_repository_base.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_title.dart';
+import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
+import 'package:ddd_todo_sample/infrastructure/task/task_repository.dart';
 
 class TaskService {
-  TaskRepositoryBase _repository;
+  // TODO: Service Locator
+  TaskRepositoryBase _repository = TaskRepository(dbHelper: DbHelper());
 
-  bool isExist(TaskTitle title) {
-    final Task task = _repository.find(title);
-    return task.id != null;
+  Future<bool> isExist(TaskTitle title) async {
+    final Task task = await _repository.find(title);
+    return task != null;
   }
 }

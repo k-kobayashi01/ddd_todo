@@ -1,11 +1,11 @@
 import 'package:ddd_todo_sample/common/exception.dart';
 
 class TaskId {
-  final int _id;
+  final int _value;
 
-  TaskId(this._id) {
-    if (_id == null) throw NullEmptyException(code: ExceptionCode.taskId);
+  TaskId(this._value) {
+    if (_value == null) throw NullEmptyException(code: ExceptionCode.taskId);
   }
 
-  int get id => _id;
+  int get value => _value;
 }

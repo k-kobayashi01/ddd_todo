@@ -1,13 +1,13 @@
 import 'package:ddd_todo_sample/common/exception.dart';
 
 class TaskTitle {
-  final String _title;
+  final String _value;
 
-  TaskTitle(this._title) {
-    if (_title == null || _title.isEmpty) {
+  TaskTitle(this._value) {
+    if (_value == null || _value.isEmpty) {
       throw NullEmptyException(code: ExceptionCode.taskTitle);
     }
   }
 
-  String get title => _title;
+  String get value => _value;
 }

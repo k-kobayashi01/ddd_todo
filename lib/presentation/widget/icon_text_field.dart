@@ -4,11 +4,13 @@ class IconTextField extends StatefulWidget {
   final TextEditingController controller;
   final IconData iconData;
   final String hint;
+  final Function(String) onChanged;
 
   IconTextField({
     @required this.controller,
     @required this.iconData,
     @required this.hint,
+    @required this.onChanged,
   });
 
   @override
@@ -26,6 +28,9 @@ class _IconTextFieldState extends State<IconTextField> {
           icon: Icon(widget.iconData),
           hintText: widget.hint,
         ),
+        onChanged: (text) {
+          widget.onChanged(text);
+        },
       ),
     );
   }

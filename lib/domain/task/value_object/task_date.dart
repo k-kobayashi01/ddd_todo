@@ -1,11 +1,19 @@
 import 'package:ddd_todo_sample/common/exception.dart';
 
 class TaskDate {
-  final DateTime _date;
+  DateTime _value;
 
-  TaskDate(this._date) {
-    if (_date == null) throw NullEmptyException(code: ExceptionCode.taskDate);
+  TaskDate(DateTime value) {
+    if (value == null) throw NullEmptyException(code: ExceptionCode.taskDate);
+    this._value = value;
   }
 
-  DateTime get date => _date;
+  TaskDate.fromString(String value) {
+    if (value == null || value.isEmpty) {
+      throw NullEmptyException(code: ExceptionCode.taskDate);
+    }
+    this._value = DateTime.parse(value);
+  }
+
+  DateTime get value => _value;
 }

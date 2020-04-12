@@ -7,21 +7,24 @@ import 'package:ddd_todo_sample/domain/task/task_service.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_date.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_description.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_title.dart';
+import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
 import 'package:ddd_todo_sample/infrastructure/task/task_factory.dart';
+import 'package:ddd_todo_sample/infrastructure/task/task_repository.dart';
 
 class TaskApplicationService {
-  TaskRepositoryBase _taskRepository;
+  // TODO Service Locator
+  final TaskRepositoryBase _taskRepository = TaskRepository(dbHelper: DbHelper());
   final TaskFactoryBase _taskFactory = TaskFactory();
   final TaskService _service = TaskService();
 
-  void create(TaskCreateCommand command) {
+  Future<void> create(TaskCreateCommand command) async {
     final TaskTitle title = TaskTitle(command.title);
     final TaskDescription description = TaskDescription(command.description);
     final TaskDate date = TaskDate(command.date);
 
     final Task task = _taskFactory.create(title: title, description: description, date: date);
 
-    if (_service.isExist(title)) {
+    if (await _service.isExist(title)) {
       throw NotUniqueException(code: ExceptionCode.taskTitle);
     }
 
