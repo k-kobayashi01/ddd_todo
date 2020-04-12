@@ -18,7 +18,7 @@ class DbHelper {
       onCreate: (Database database, int version) async {
         await database.execute('''
           CREATE TABLE tasks (
-            id INTEGER NOT NULL,
+            id INTEGER NOT NULL AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT,
             date DATE NOT NULL,

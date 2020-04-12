@@ -24,7 +24,8 @@ class TaskNotifier with ChangeNotifier {
       description: description,
       date: date,
     );
-    _applicationService.create(command);
+    await _applicationService.create(command);
+    _updateTasks();
   }
 
   Future<List<TaskDto>> getTasks() async {

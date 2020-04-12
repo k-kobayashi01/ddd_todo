@@ -11,7 +11,7 @@ class Task {
   final TaskDate _date;
 
   Task({
-    @required TaskId id,
+    TaskId id,
     @required TaskTitle title,
     @required TaskDescription description,
     @required TaskDate date,

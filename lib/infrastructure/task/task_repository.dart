@@ -32,8 +32,8 @@ class TaskRepository implements TaskRepositoryBase {
   @override
   void save(Task task) {
     _dbHelper.rawInsert(
-      'INSERT INTO tasks (id, title, description, date) VALUES (?, ?, ?, ?)',
-      [task.id.value, task.title.value, task.description.value, task.date.value.toString()],
+      'INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)',
+      [task.title.value, task.description.value, task.date.value.toString()],
     );
   }
 
