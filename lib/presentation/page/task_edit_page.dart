@@ -92,6 +92,7 @@ class _TaskEditPageState extends State<TaskEditPage> {
                   title: notifier.title,
                   description: notifier.description,
                   date: notifier.date,
+                  status: widget.task.status,
                 );
                 Navigator.pop(context);
               } on NotFoundException catch (e) {

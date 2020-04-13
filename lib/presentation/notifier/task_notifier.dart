@@ -35,12 +35,14 @@ class TaskNotifier with ChangeNotifier {
     @required String title,
     @required String description,
     @required DateTime date,
+    @required bool status,
   }) async {
     final TaskUpdateCommand command = TaskUpdateCommand(
       id: id,
       title: title,
       description: description,
       date: date,
+      status: status,
     );
     await _applicationService.update(command);
     _updateTasks();

@@ -21,7 +21,8 @@ class DbHelper {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT,
-            date DATE NOT NULL
+            date DATE NOT NULL,
+            status BOOLEAN NOT NULL
           )
         ''');
       },

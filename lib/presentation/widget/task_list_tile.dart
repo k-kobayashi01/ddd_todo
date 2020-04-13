@@ -1,7 +1,9 @@
 import 'package:ddd_todo_sample/application/dto/task_dto.dart';
+import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
 import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
 import 'package:ddd_todo_sample/presentation/widget/date_text.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class TaskListTile extends StatelessWidget {
   final TaskDto task;
@@ -10,10 +12,13 @@ class TaskListTile extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TaskNotifier notifier = Provider.of<TaskNotifier>(context);
     return ListTile(
       leading: IconButton(
         icon: Icon(Icons.check_circle_outline),
-        onPressed: () {},
+        onPressed: () {
+          notifier.updateTask(id: task.id, title: task.title, description: task.description, date: task.date, status: true);
+        },
       ),
       title: Text(task.title),
       subtitle: Column(

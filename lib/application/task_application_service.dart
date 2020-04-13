@@ -10,6 +10,7 @@ import 'package:ddd_todo_sample/domain/task/task_service.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_date.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_description.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_id.dart';
+import 'package:ddd_todo_sample/domain/task/value_object/task_status.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_title.dart';
 import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
 import 'package:ddd_todo_sample/infrastructure/task/task_factory.dart';
@@ -25,8 +26,14 @@ class TaskApplicationService {
     final TaskTitle title = TaskTitle(command.title);
     final TaskDescription description = TaskDescription(command.description);
     final TaskDate date = TaskDate(command.date);
+    final TaskStatus status = TaskStatus(false);
 
-    final Task task = _taskFactory.create(title: title, description: description, date: date);
+    final Task task = _taskFactory.create(
+      title: title,
+      description: description,
+      date: date,
+      status: status,
+    );
 
     if (await _service.isExist(title)) {
       throw NotUniqueException(code: ExceptionCode.taskTitle);
@@ -57,6 +64,9 @@ class TaskApplicationService {
 
     final TaskDate date = TaskDate(command.date);
     task.changeDate(date);
+
+    final TaskStatus status = TaskStatus(command.status);
+    task.changeStatus(status);
 
     _taskRepository.save(task);
   }
