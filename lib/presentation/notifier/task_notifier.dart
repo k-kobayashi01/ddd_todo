@@ -1,4 +1,5 @@
 import 'package:ddd_todo_sample/application/command/task_create_command.dart';
+import 'package:ddd_todo_sample/application/command/task_delete_command.dart';
 import 'package:ddd_todo_sample/application/command/task_update_command.dart';
 import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/application/task_application_service.dart';
@@ -42,6 +43,12 @@ class TaskNotifier with ChangeNotifier {
       date: date,
     );
     await _applicationService.update(command);
+    _updateTasks();
+  }
+
+  Future<void> deleteTask({@required int id}) async {
+    final TaskDeleteCommand command = TaskDeleteCommand(id: id);
+    await _applicationService.delete(command);
     _updateTasks();
   }
 

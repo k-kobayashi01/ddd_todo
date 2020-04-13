@@ -31,8 +31,8 @@ class TaskRepository implements TaskRepositoryBase {
   }
 
   @override
-  void remove(Task task) {
-    // TODO: implement remove
+  void delete(TaskId id) {
+    _dbHelper.rawDelete('DELETE FROM tasks WHERE id = ?', [id.value]);
   }
 
   @override

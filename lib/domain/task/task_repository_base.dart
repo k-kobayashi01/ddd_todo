@@ -7,5 +7,5 @@ abstract class TaskRepositoryBase {
   Future<Task> findById(TaskId id);
   Future<Task> findByTitle(TaskTitle title);
   void save(Task task);
-  void remove(Task task);
+  void delete(TaskId id);
 }

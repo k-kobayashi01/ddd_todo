@@ -1,4 +1,5 @@
 import 'package:ddd_todo_sample/application/command/task_create_command.dart';
+import 'package:ddd_todo_sample/application/command/task_delete_command.dart';
 import 'package:ddd_todo_sample/application/command/task_update_command.dart';
 import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/common/exception.dart';
@@ -58,5 +59,17 @@ class TaskApplicationService {
     task.changeDate(date);
 
     _taskRepository.save(task);
+  }
+
+  Future<void> delete(TaskDeleteCommand command) async {
+    final TaskId targetId = TaskId(command.id);
+
+    final Task task = await _taskRepository.findById(targetId);
+
+    if (task == null) {
+      throw NotFoundException(code: ExceptionCode.taskId);
+    }
+
+    _taskRepository.delete(targetId);
   }
 }

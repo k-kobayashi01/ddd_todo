@@ -42,4 +42,11 @@ class DbHelper {
   ]) async {
     return await (_transaction ?? _database ?? await _open()).rawInsert(sql, arguments);
   }
+
+  Future<int> rawDelete(
+    String sql, [
+    List<dynamic> arguments,
+  ]) async {
+    return await (_transaction ?? _database ?? await _open()).rawDelete(sql, arguments);
+  }
 }

@@ -125,6 +125,20 @@ class _TaskEditPageState extends State<TaskEditPage> {
             child: const Text('OK'),
             onPressed: () {
               Navigator.pop(context);
+              final taskNotifier = Provider.of<TaskNotifier>(context, listen: false);
+              try {
+                taskNotifier.deleteTask(id: widget.task.id);
+              } on NotFoundException catch (e) {
+                switch (e.code) {
+                  case ExceptionCode.taskId:
+                    SimpleSnackBar().show(context, message: 'すでに存在しないタスクです');
+                    break;
+                  default:
+                    SimpleSnackBar().show(context, message: 'エラーが発生しました');
+                    break;
+                }
+              }
+              Navigator.pop(context);
             },
           )
         ],
