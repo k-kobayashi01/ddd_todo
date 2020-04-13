@@ -18,3 +18,9 @@ class NotUniqueException implements Exception {
 
   NotUniqueException({@required this.code});
 }
+
+class LengthException implements Exception {
+  final ExceptionCode code;
+
+  LengthException({@required this.code});
+}

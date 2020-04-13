@@ -4,8 +4,8 @@ class TaskDescription {
   final String _value;
 
   TaskDescription(this._value) {
-    if (_value == null || _value.isEmpty) {
-      throw NullEmptyException(code: ExceptionCode.taskDescription);
+    if (_value.length > 200) {
+      throw LengthException(code: ExceptionCode.taskDescription);
     }
   }
 

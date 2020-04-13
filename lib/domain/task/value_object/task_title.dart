@@ -7,6 +7,9 @@ class TaskTitle {
     if (_value == null || _value.isEmpty) {
       throw NullEmptyException(code: ExceptionCode.taskTitle);
     }
+    if (_value.length > 100) {
+      throw LengthException(code: ExceptionCode.taskTitle);
+    }
   }
 
   String get value => _value;

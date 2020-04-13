@@ -9,6 +9,12 @@ class TaskCreateNotifier with ChangeNotifier {
   String get description => _description;
   DateTime get date => _date;
 
+  void init() {
+    _title = null;
+    _description = null;
+    _date = null;
+  }
+
   void setTitle(String newTitle) {
     _title = newTitle;
 
