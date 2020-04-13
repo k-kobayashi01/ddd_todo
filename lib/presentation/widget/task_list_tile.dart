@@ -31,7 +31,14 @@ class TaskListTile extends StatelessWidget {
         ],
       ),
       onTap: () {
-        Navigator.pushNamed(context, TaskEditPage.routeName);
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) {
+              return TaskEditPage(task: task);
+            },
+          ),
+        );
       },
     );
   }

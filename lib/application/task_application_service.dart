@@ -1,4 +1,5 @@
 import 'package:ddd_todo_sample/application/command/task_create_command.dart';
+import 'package:ddd_todo_sample/application/command/task_update_command.dart';
 import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/common/exception.dart';
 import 'package:ddd_todo_sample/domain/task/task.dart';
@@ -7,6 +8,7 @@ import 'package:ddd_todo_sample/domain/task/task_repository_base.dart';
 import 'package:ddd_todo_sample/domain/task/task_service.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_date.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_description.dart';
+import 'package:ddd_todo_sample/domain/task/value_object/task_id.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_title.dart';
 import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
 import 'package:ddd_todo_sample/infrastructure/task/task_factory.dart';
@@ -35,5 +37,26 @@ class TaskApplicationService {
   Future<List<TaskDto>> getTasks() async {
     final List<Task> tasks = await _taskRepository.find();
     return tasks.map((task) => TaskDto(task)).toList();
+  }
+
+  Future<void> update(TaskUpdateCommand command) async {
+    final TaskId targetId = TaskId(command.id);
+
+    final Task task = await _taskRepository.findById(targetId);
+
+    if (task == null) {
+      throw NotFoundException(code: ExceptionCode.taskId);
+    }
+
+    final TaskTitle title = TaskTitle(command.title);
+    task.changeTitle(title);
+
+    final TaskDescription description = TaskDescription(command.description);
+    task.changeDescription(description);
+
+    final TaskDate date = TaskDate(command.date);
+    task.changeDate(date);
+
+    _taskRepository.save(task);
   }
 }

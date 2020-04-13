@@ -19,6 +19,12 @@ class TaskRepository implements TaskRepositoryBase {
   }
 
   @override
+  Future<Task> findById(TaskId id) async {
+    final List<Map<String, dynamic>> list = await _dbHelper.rawQuery('SELECT * FROM tasks WHERE id = ?', [id.value]);
+    return list.isEmpty ? null : toTask(list[0]);
+  }
+
+  @override
   Future<Task> findByTitle(TaskTitle title) async {
     final List<Map<String, dynamic>> list = await _dbHelper.rawQuery('SELECT * FROM tasks WHERE title = ?', [title.value]);
     return list.isEmpty ? null : toTask(list[0]);
@@ -32,8 +38,8 @@ class TaskRepository implements TaskRepositoryBase {
   @override
   void save(Task task) {
     _dbHelper.rawInsert(
-      'INSERT INTO tasks (title, description, date) VALUES (?, ?, ?)',
-      [task.title.value, task.description.value, task.date.value.toString()],
+      'INSERT OR REPLACE INTO tasks (id, title, description, date) VALUES (?, ?, ?, ?)',
+      [task.id?.value ?? null, task.title.value, task.description.value, task.date.value.toString()],
     );
   }
 

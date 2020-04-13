@@ -6,9 +6,9 @@ import 'package:flutter/material.dart';
 
 class Task {
   final TaskId _id;
-  final TaskTitle _title;
-  final TaskDescription _description;
-  final TaskDate _date;
+  TaskTitle _title;
+  TaskDescription _description;
+  TaskDate _date;
 
   Task({
     TaskId id,
@@ -24,4 +24,16 @@ class Task {
   TaskTitle get title => _title;
   TaskDescription get description => _description;
   TaskDate get date => _date;
+
+  void changeTitle(TaskTitle newTitle) {
+    _title = newTitle;
+  }
+
+  void changeDescription(TaskDescription newDescription) {
+    _description = newDescription;
+  }
+
+  void changeDate(TaskDate newDate) {
+    _date = newDate;
+  }
 }

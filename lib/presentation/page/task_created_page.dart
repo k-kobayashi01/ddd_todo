@@ -1,8 +1,10 @@
 import 'package:ddd_todo_sample/common/exception.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_create_notifier.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
+import 'package:ddd_todo_sample/presentation/widget/date_picker.dart';
 import 'package:ddd_todo_sample/presentation/widget/date_text.dart';
 import 'package:ddd_todo_sample/presentation/widget/icon_text_field.dart';
+import 'package:ddd_todo_sample/presentation/widget/simple_snack_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -52,7 +54,7 @@ class _TaskCreatedPageState extends State<TaskCreatedPage> {
             leading: Icon(Icons.calendar_today),
             title: DateText(dateTime: notifier.date),
             onTap: () async {
-              final DateTime selectedDate = await _showDatePicker(context);
+              final DateTime selectedDate = await DatePicker().show(context);
               notifier.setDate(selectedDate);
             },
           ),
@@ -75,48 +77,31 @@ class _TaskCreatedPageState extends State<TaskCreatedPage> {
               } on NullEmptyException catch (e) {
                 switch (e.code) {
                   case ExceptionCode.taskTitle:
-                    _showSnackBar(context, 'タイトルを入力してください');
+                    SimpleSnackBar().show(context, message: 'タイトルを入力してください');
                     break;
                   case ExceptionCode.taskDate:
-                    _showSnackBar(context, '日付を入力してください');
+                    SimpleSnackBar().show(context, message: '日付を入力してください');
                     break;
                   default:
-                    _showSnackBar(context, 'エラーが発生しました');
+                    SimpleSnackBar().show(context, message: 'エラーが発生しました');
                     break;
                 }
               } on LengthException catch (e) {
                 switch (e.code) {
                   case ExceptionCode.taskTitle:
-                    _showSnackBar(context, 'タイトルを短くしてください');
+                    SimpleSnackBar().show(context, message: 'タイトルを短くしてください');
                     break;
                   case ExceptionCode.taskDescription:
-                    _showSnackBar(context, '詳細を短くしてください');
+                    SimpleSnackBar().show(context, message: '詳細を短くしてください');
                     break;
                   default:
-                    _showSnackBar(context, 'エラーが発生しました');
+                    SimpleSnackBar().show(context, message: 'エラーが発生しました');
                     break;
                 }
               }
             },
           );
         },
-      ),
-    );
-  }
-
-  Future<DateTime> _showDatePicker(BuildContext context) {
-    return showDatePicker(
-      context: context,
-      initialDate: DateTime.now(),
-      firstDate: DateTime(2020, 1, 1),
-      lastDate: DateTime(2020, 12, 31),
-    );
-  }
-
-  void _showSnackBar(BuildContext context, String message) {
-    Scaffold.of(context).showSnackBar(
-      SnackBar(
-        content: Text(message),
       ),
     );
   }

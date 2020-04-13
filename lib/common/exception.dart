@@ -24,3 +24,9 @@ class LengthException implements Exception {
 
   LengthException({@required this.code});
 }
+
+class NotFoundException implements Exception {
+  final ExceptionCode code;
+
+  NotFoundException({@required this.code});
+}

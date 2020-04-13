@@ -18,11 +18,10 @@ class DbHelper {
       onCreate: (Database database, int version) async {
         await database.execute('''
           CREATE TABLE tasks (
-            id INTEGER NOT NULL AUTOINCREMENT,
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
             title TEXT NOT NULL,
             description TEXT,
-            date DATE NOT NULL,
-            PRIMARY KEY (id)
+            date DATE NOT NULL
           )
         ''');
       },

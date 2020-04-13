@@ -1,4 +1,5 @@
 import 'package:ddd_todo_sample/presentation/notifier/task_create_notifier.dart';
+import 'package:ddd_todo_sample/presentation/notifier/task_edit_notifier.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
 import 'package:ddd_todo_sample/presentation/page/task_created_page.dart';
 import 'package:ddd_todo_sample/presentation/page/task_edit_page.dart';
@@ -18,6 +19,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider<TaskCreateNotifier>(
           create: (_) => TaskCreateNotifier(),
+        ),
+        ChangeNotifierProvider<TaskEditNotifier>(
+          create: (_) => TaskEditNotifier(),
         ),
       ],
       child: MaterialApp(
