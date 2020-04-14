@@ -14,6 +14,11 @@ class TaskRepository implements TaskRepositoryBase {
   TaskRepository({@required DbHelper dbHelper}) : _dbHelper = dbHelper;
 
   @override
+  Future<T> transaction<T>(Future<T> Function() f) async {
+    return await _dbHelper.transaction<T>(() async => await f());
+  }
+
+  @override
   Future<List<Task>> find() async {
     final List<Map<String, dynamic>> list = await _dbHelper.rawQuery('SELECT * FROM tasks WHERE status = 0 ORDER BY date');
     return list.map((data) => toTask(data)).toList();

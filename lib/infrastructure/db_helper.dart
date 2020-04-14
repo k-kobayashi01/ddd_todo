@@ -30,6 +30,22 @@ class DbHelper {
     return _database;
   }
 
+  Future<void> dispose() async {
+    await _database?.close();
+    _database = null;
+  }
+
+  Future<T> transaction<T>(Future<T> Function() f) async {
+    final db = _database ?? await _open();
+    return db.transaction<T>((transaction) async {
+      _transaction = transaction;
+      return await f();
+    }).then((v) {
+      _transaction = null;
+      return v;
+    });
+  }
+
   Future<List<Map<String, dynamic>>> rawQuery(
     String sql, [
     List<dynamic> arguments,

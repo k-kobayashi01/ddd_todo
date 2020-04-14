@@ -1,3 +1,4 @@
+import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_create_notifier.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_edit_notifier.dart';
 import 'package:ddd_todo_sample/presentation/notifier/task_notifier.dart';
@@ -22,6 +23,14 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TaskEditNotifier>(
           create: (_) => TaskEditNotifier(),
         ),
+        Provider<DbHelper>(
+          lazy: false,
+          create: (_) {
+            final DbHelper helper = DbHelper();
+            return helper;
+          },
+          dispose: (_, helper) async => await helper.dispose(),
+        )
       ],
       child: MaterialApp(
         debugShowCheckedModeBanner: false,

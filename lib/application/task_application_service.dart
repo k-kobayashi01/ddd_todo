@@ -35,11 +35,13 @@ class TaskApplicationService {
       status: status,
     );
 
-    if (await _service.isExist(title)) {
-      throw NotUniqueException(code: ExceptionCode.taskTitle);
-    }
+    _taskRepository.transaction<void>(() async {
+      if (await _service.isExist(title)) {
+        throw NotUniqueException(code: ExceptionCode.taskTitle);
+      }
 
-    _taskRepository.save(task);
+      _taskRepository.save(task);
+    });
   }
 
   Future<List<TaskDto>> getTasks() async {
@@ -50,36 +52,40 @@ class TaskApplicationService {
   Future<void> update(TaskUpdateCommand command) async {
     final TaskId targetId = TaskId(command.id);
 
-    final Task task = await _taskRepository.findById(targetId);
+    _taskRepository.transaction<void>(() async {
+      final Task task = await _taskRepository.findById(targetId);
 
-    if (task == null) {
-      throw NotFoundException(code: ExceptionCode.taskId);
-    }
+      if (task == null) {
+        throw NotFoundException(code: ExceptionCode.taskId);
+      }
 
-    final TaskTitle title = TaskTitle(command.title);
-    task.changeTitle(title);
+      final TaskTitle title = TaskTitle(command.title);
+      task.changeTitle(title);
 
-    final TaskDescription description = TaskDescription(command.description);
-    task.changeDescription(description);
+      final TaskDescription description = TaskDescription(command.description);
+      task.changeDescription(description);
 
-    final TaskDate date = TaskDate(command.date);
-    task.changeDate(date);
+      final TaskDate date = TaskDate(command.date);
+      task.changeDate(date);
 
-    final TaskStatus status = TaskStatus(command.status);
-    task.changeStatus(status);
+      final TaskStatus status = TaskStatus(command.status);
+      task.changeStatus(status);
 
-    _taskRepository.save(task);
+      _taskRepository.save(task);
+    });
   }
 
   Future<void> delete(TaskDeleteCommand command) async {
     final TaskId targetId = TaskId(command.id);
 
-    final Task task = await _taskRepository.findById(targetId);
+    _taskRepository.transaction<void>(() async {
+      final Task task = await _taskRepository.findById(targetId);
 
-    if (task == null) {
-      throw NotFoundException(code: ExceptionCode.taskId);
-    }
+      if (task == null) {
+        throw NotFoundException(code: ExceptionCode.taskId);
+      }
 
-    _taskRepository.delete(targetId);
+      _taskRepository.delete(targetId);
+    });
   }
 }
