@@ -12,14 +12,15 @@ import 'package:ddd_todo_sample/domain/task/value_object/task_description.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_id.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_status.dart';
 import 'package:ddd_todo_sample/domain/task/value_object/task_title.dart';
-import 'package:ddd_todo_sample/infrastructure/db_helper.dart';
-import 'package:ddd_todo_sample/infrastructure/task/task_factory.dart';
-import 'package:ddd_todo_sample/infrastructure/task/task_repository.dart';
+import 'package:get_it/get_it.dart';
 
 class TaskApplicationService {
-  // TODO Service Locator
-  final TaskRepositoryBase _taskRepository = TaskRepository(dbHelper: DbHelper());
-  final TaskFactoryBase _taskFactory = TaskFactory();
+  final TaskFactoryBase _taskFactory;
+
+  TaskApplicationService(this._taskFactory);
+
+  final TaskRepositoryBase _taskRepository = GetIt.instance<TaskRepositoryBase>();
+
   final TaskService _service = TaskService();
 
   Future<void> create(TaskCreateCommand command) async {

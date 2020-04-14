@@ -3,6 +3,7 @@ import 'package:ddd_todo_sample/application/command/task_delete_command.dart';
 import 'package:ddd_todo_sample/application/command/task_update_command.dart';
 import 'package:ddd_todo_sample/application/dto/task_dto.dart';
 import 'package:ddd_todo_sample/application/task_application_service.dart';
+import 'package:ddd_todo_sample/infrastructure/task/task_factory.dart';
 import 'package:flutter/material.dart';
 
 class TaskNotifier with ChangeNotifier {
@@ -10,7 +11,7 @@ class TaskNotifier with ChangeNotifier {
     _updateTasks();
   }
 
-  final TaskApplicationService _applicationService = TaskApplicationService();
+  final TaskApplicationService _applicationService = TaskApplicationService(TaskFactory());
 
   List<TaskDto> _tasks;
 
